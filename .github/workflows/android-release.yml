@@ -17,14 +17,15 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - uses: android-actions/setup-android@v3
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
       - name: Build Android source
         run: |
           unzip -q Roadtone-Pleos-preview.zip
-          sdkmanager "platforms;android-35" "build-tools;34.0.0"
+          sdkmanager=$(find "$ANDROID_HOME/cmdline-tools" -type f -name sdkmanager | sort -V | tail -n 1)
+          test -x "$sdkmanager"
+          "$sdkmanager" --install "platforms;android-35" "build-tools;34.0.0"
           gradle -p Roadtone-Pleos-preview --no-daemon :app:assembleRelease
       - name: Sign and verify preview APK
         shell: bash
