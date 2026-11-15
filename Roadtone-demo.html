@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>로드톤 Roadtone</title><style>*{box-sizing:border-box} :root{color-scheme:dark;--bg:#10151d;--panel:#191f29;--tile:#252e3b;--line:#424f61;--text:#f4f7fb;--muted:#b8c5d6;--accent:#91e4ff;--pad:clamp(12px,1.45vw,28px);font-family:Inter,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--text)}button,input{font:inherit}button{cursor:pointer;color:var(--text);background:var(--tile);border:1px solid var(--line);border-radius:11px;font-weight:650;min-height:48px;padding:0 14px;touch-action:manipulation}button:hover{border-color:var(--muted)}button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:2px}button:disabled{opacity:.6;cursor:default}button.active,button[aria-pressed=true].primary,button.primary{background:var(--accent);border-color:var(--accent);color:#12232d}button[aria-pressed=false].mode{border-color:#d4be96;color:#ffe1ad}.app{width:100%;height:100dvh;padding:var(--pad);display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:clamp(8px,1.05vw,18px);overflow:hidden}
+.top,.player,.scene-controls{display:flex;align-items:center;gap:14px;min-width:0}.top{justify-content:space-between}.brand{font-weight:800;font-size:clamp(20px,2.25vw,34px);letter-spacing:.075em}.tabs,.pills{display:flex;gap:8px;align-items:center;min-width:0}.badge,.state-indicator{background:var(--tile);border:1px solid var(--line);border-radius:9px;padding:10px 12px;white-space:nowrap;font-size:13px;font-weight:700}.badge{color:var(--accent)}.stage{min-height:0;min-width:0;overflow:hidden;display:grid;grid-template-rows:auto minmax(0,1fr);gap:12px}.scene-controls{justify-content:space-between;gap:10px}.scene-controls .pills{flex-wrap:nowrap}.scene-controls label{color:var(--muted);font-size:13px;white-space:nowrap}.scene-controls button{min-height:48px}
+section,main,aside{min-width:0;min-height:0}h1,h2,p{margin:0}.music,.console{height:100%;min-height:0;display:grid;gap:12px}.music{grid-template-columns:minmax(0,1.4fr) minmax(300px,1fr)}.console{display:none;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr) minmax(0,.94fr);grid-template-rows:minmax(0,1fr)}body.console-open .music{display:none}body.console-open .console{display:grid}.hero,.queue,.panel{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel)}.hero{--scene-hue:42;isolation:isolate;position:relative;display:grid;grid-template-rows:auto minmax(0,1fr) auto;align-items:start;gap:12px;padding:clamp(18px,2.2vw,34px);background:radial-gradient(ellipse at 75% 38%,hsl(var(--scene-hue) 40% 22%) 0%,transparent 68%),#151e29}.hero:after{content:"";z-index:-1;position:absolute;inset:0;background:repeating-radial-gradient(ellipse at 83% 38%,transparent 0 23px,#aecafa16 24px 25px);mask-image:linear-gradient(110deg,transparent,black);pointer-events:none}.eyebrow{color:var(--accent);font-size:14px;font-weight:800;letter-spacing:.1em}.hero-copy{align-self:center;min-width:0}.hero h1{font-size:clamp(28px,4.2vw,72px);line-height:1.05;letter-spacing:-.04em;margin:12px 0;color:var(--text)}.hero p{font-size:clamp(14px,1.35vw,20px);color:#d5e0eb;max-width:37ch;line-height:1.5}.hero-bottom{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.status-dot{width:10px;height:10px;border-radius:50%;background:var(--accent);display:inline-block;margin-right:7px}.muted{font-size:14px;color:var(--muted);line-height:1.4}.queue{display:grid;grid-template-rows:auto minmax(0,1fr)}.queue-header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line)}h2{font-size:clamp(17px,1.4vw,24px)}.queue-list{overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-gutter:stable;scrollbar-color:#88a2bb #252e3b;padding:5px 8px;min-height:0}.queue-item{width:100%;min-height:55px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;text-align:left;background:transparent;border-color:transparent}.queue-item[aria-current=true]{background:#233d51;border-color:#638fa8;color:var(--accent)}.queue-item .idx{display:grid;place-items:center;background:hsl(var(--cover) 26% 29%);height:30px;width:30px;border-radius:7px;font-variant-numeric:tabular-nums}.queue-item strong,.queue-item small{display:block;text-overflow:ellipsis;white-space:nowrap;overflow:hidden}.queue-item small{font-size:12px;color:var(--muted);font-weight:500}
+.player{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(120px,.62fr);background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:9px 14px;min-height:66px}.player .now{min-width:0}.player .now strong{font-size:clamp(15px,1.35vw,22px);display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.player .notice{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.transport{display:flex;gap:8px;align-items:center}.transport button{min-width:48px;padding:0 11px}.transport .play{min-width:64px}.volume{display:grid;grid-template-columns:auto minmax(36px,1fr) auto;align-items:center;gap:8px;white-space:nowrap}.volume output{font-variant-numeric:tabular-nums;font-size:13px;width:32px}.upload{display:flex;align-items:center;min-height:48px;padding:0 10px;border:1px solid var(--line);border-radius:9px;color:var(--text);font-size:13px;white-space:nowrap;cursor:pointer}.upload:focus-within{outline:3px solid var(--accent)}.upload input{position:absolute;width:1px;height:1px;opacity:0}
+.panel{padding:clamp(10px,1.15vw,18px);display:flex;flex-direction:column;gap:clamp(6px,1vh,12px)}.panelhead,.line-status{display:flex;align-items:center;justify-content:space-between;gap:8px}.panel .pills{flex-wrap:wrap}.panel .pills button{padding:0 10px}.mode{min-height:48px;font-size:13px;white-space:nowrap}.eqgraph{width:100%;height:clamp(27px,7vh,66px);border-radius:6px;background:#141c28;display:block}.eq-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;align-items:end}.eq-grid label{min-width:0;display:grid;justify-items:center;font-size:11px;color:var(--muted);white-space:nowrap}.eq-grid input{width:100%;min-width:0}.value-line{display:grid;grid-template-columns:auto minmax(0,1fr);gap:9px;align-items:center;color:var(--muted);font-size:14px}.color-area{height:clamp(42px,13vh,126px);min-height:42px;border-radius:10px;position:relative;touch-action:none;border:1px solid #697d92;background:linear-gradient(to top,#000,transparent),linear-gradient(to right,#fff,hsl(var(--hue) 100% 50%))}.color-marker{position:absolute;width:18px;height:18px;transform:translate(-50%,-50%);border:2px solid #fff;box-shadow:0 0 0 1px #10151d;border-radius:50%;pointer-events:none}.color-preview{width:23px;height:23px;border-radius:50%;border:1px solid #e4edf6}.seat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.seat-grid button{padding:0 6px}.roof-demo{display:grid;grid-template-columns:minmax(0,1fr);gap:3px}.roof-glass{height:14px;border-radius:5px;background:linear-gradient(90deg,#75bdd9,#e0f6ff);opacity:.6}.panel-tabs{display:none}.panel-tabs button{padding:0 12px}.toggle{display:flex;align-items:center;gap:7px;font-size:13px;min-height:40px}.toggle input{width:20px;height:20px}input[type=range]{accent-color:var(--accent);min-width:0;width:100%;height:32px;margin:0}input[type=checkbox]{accent-color:var(--accent)}.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media(max-width:1100px){.console{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:8px}.panel-tabs{display:flex}.console .panel{display:none}.console[data-pane=eq] .panel[data-card=eq],.console[data-pane=light] .panel[data-card=light],.console[data-pane=car] .panel[data-card=car]{display:flex}.console .panel{max-width:none}.hero h1{font-size:clamp(26px,5vw,55px)}}
+@media(max-width:720px){.app{--pad:10px}.top,.scene-controls{gap:5px}.top .badge{display:none}.top .brand{font-size:20px}.top button,.scene-controls button{padding:0 8px;font-size:13px}.scene-controls label{display:none}.stage{gap:6px}.music{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(112px,.62fr) minmax(0,1fr);gap:7px}.hero{padding:11px 13px;gap:4px}.hero h1{font-size:clamp(23px,5vw,35px);margin:4px 0}.hero p{font-size:13px}.hero-bottom .badge{display:none}.queue-header{padding:4px 9px}.player{padding:6px 7px;gap:6px;grid-template-columns:minmax(0,1fr) auto}.player .volume{grid-column:1 / -1}.transport{gap:4px}.transport button{min-width:42px;padding:0 7px}.scene-controls .pills{gap:4px}}
+@media(max-height:610px){.app{padding:10px;gap:8px}.stage{gap:6px}.top button,.scene-controls button,.panel-tabs button,.mode{min-height:44px}.panel{gap:5px}.panel .pills button,.seat-grid button{min-height:41px}.hero{padding:14px;gap:5px}.hero h1{margin:5px 0}.panel .muted{font-size:12px}.player{min-height:56px;padding:4px 9px}.transport button{min-height:44px}.upload{min-height:44px}.toggle{min-height:33px}.eqgraph{height:29px}.color-area{height:49px}.queue-item{min-height:48px}}
+@media(min-width:721px) and (max-height:500px){.panel .color-area{height:44px}.panel{padding:8px}.panel .eyebrow{display:none}.panel .pills button,.seat-grid button{min-height:35px}.panel .mode{min-height:40px}}
+
+.nature{display:none;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel);grid-template-rows:auto minmax(0,1fr)}body.nature-open .queue{display:none}body.nature-open .nature{display:grid}
+.nature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:10px;padding:12px;min-width:0;min-height:0}
+.nature-choice{min-width:0;min-height:0;text-align:left;padding:clamp(8px,1vw,15px);display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:6px;background:radial-gradient(ellipse at 100% 0%,hsl(var(--sound-hue) 28% 27%),transparent 85%),var(--tile)}
+.nature-choice[aria-current=true]{border-color:var(--accent);color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}.nature-choice strong{font-size:clamp(14px,1.5vw,23px)}.nature-choice small{color:var(--muted);font-size:clamp(11px,1vw,14px);font-weight:500}.nature-choice .nature-mark{font-size:15px;color:var(--accent);margin-bottom:3px}
+@media(max-width:720px){.nature-grid{gap:6px;padding:6px}.nature-choice{gap:2px}.nature-choice .nature-mark{display:none}}
+
+/* Cool charcoal panels and restrained blue status, inspired by Hyundai's wide IVI. */
+.top{padding-bottom:clamp(4px,.65vw,12px);border-bottom:1px solid #313d4e}
+.brand{display:flex;align-items:center;gap:12px;letter-spacing:.10em}
+.brand::before{content:"";width:21px;height:21px;background:linear-gradient(#91e4ff 0 0) 0 0/8px 8px no-repeat,linear-gradient(#91e4ff 0 0) 13px 0/8px 8px no-repeat,linear-gradient(#91e4ff 0 0) 0 13px/8px 8px no-repeat,linear-gradient(#517289 0 0) 13px 13px/8px 8px no-repeat;flex:none}
+.tabs{background:#181f2a;border:1px solid #3b495b;border-radius:13px;padding:3px}
+.tabs button{border-color:transparent;background:transparent}
+.tabs button.active{color:#f2f9ff;background:#344b60;border-color:#6387a1}
+.scene-controls .pills button.active{border-color:#77afc7;background:#263e50;color:#e5f7ff}
+.hero,.queue,.nature,.panel,.player{border-radius:13px}
+.hero{background:radial-gradient(ellipse at 80% 37%,hsl(var(--scene-hue) 36% 23%) 0%,transparent 60%),linear-gradient(117deg,#1c2939,#121923 68%)}
+.hero:after{background:repeating-linear-gradient(0deg,transparent 0 24px,#90b2d015 25px 26px),repeating-linear-gradient(90deg,transparent 0 24px,#90b2d015 25px 26px);mask-image:radial-gradient(ellipse at 84% 45%,black,transparent 76%)}
+.eyebrow{letter-spacing:.07em}.state-indicator{font-variant-numeric:tabular-nums}.state-indicator:before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;background:#91e4ff}
+.player{border-top-color:#607185;background:linear-gradient(180deg,#212b38,#19212d)}
+.transport .play{border-radius:50%;min-width:52px;height:52px;padding:0}
+.nature-choice{background:radial-gradient(ellipse at 100% 0%,hsl(var(--sound-hue) 27% 30%),transparent 82%),#212b37}
+@media(max-width:720px){.brand::before{display:none}.tabs{gap:3px;padding:2px}.top .tabs button{padding-inline:6px}}
+
+</style></head>
+<body><div class="app">
+<header class="top">
+  <div class="brand">ROADTONE</div>
+  <nav class="tabs" aria-label="화면 전환"><button id="musicView" class="active" aria-pressed="true">음악</button><button id="natureView" aria-pressed="false">자연의 소리</button><button id="consoleView" aria-pressed="false">사운드 콘솔</button></nav>
+  <span class="badge">차량 상태 시뮬레이션</span>
+</header>
+<div class="stage">
+  <div class="scene-controls">
+    <div class="pills" id="scenes" aria-label="시연할 주행 장면"><label>시연 장면</label><button class="active" data-scene="도시" aria-pressed="true">퇴근길 정체</button><button data-scene="바다" aria-pressed="false">해안가 주차</button><button data-scene="충전" aria-pressed="false">충전 휴식</button></div>
+    <span id="drivingStatus" class="state-indicator">주행 중</span>
+  </div>
+  <main class="music" id="musicScreen">
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="eyebrow">지금의 드라이브</div>
+      <div class="hero-copy"><div class="muted" id="sceneName">퇴근길 정체</div><h1 id="heroTitle">퇴근길 리듬</h1><p id="scene">정체된 퇴근길에 생동감 있는 리듬을 더해요.</p></div>
+      <div class="hero-bottom"><button id="autoMusic" class="mode" aria-pressed="true">음악 · 자동</button><span class="badge" id="lightStatus"><span class="status-dot"></span>조명 · 자동</span><div class="sr" id="uiStatus" aria-live="polite"></div></div>
+    </section>
+    <section class="queue" aria-labelledby="queueTitle">
+      <header class="queue-header"><div><h2 id="queueTitle">음악 목록</h2><div class="muted" id="queueSummary">데모 사운드</div></div><label class="upload">내 음원 열기<input type="file" id="file" accept="audio/*" aria-label="내 음원 열기"></label></header>
+      <div class="queue-list" id="queueList" tabindex="0" role="region" aria-label="스크롤 가능한 음악 목록"></div>
+    </section>
+    <section class="nature" aria-labelledby="natureTitle">
+      <header class="queue-header"><div><h2 id="natureTitle">자연의 소리</h2><div class="muted">한 번 누르면 바로 재생</div></div></header>
+      <div class="nature-grid" id="natureGrid"></div>
+    </section>
+  </main>
+  <aside class="console" id="consoleScreen" data-pane="eq" aria-label="사운드 콘솔">
+    <nav class="pills panel-tabs" aria-label="콘솔 구역"><button data-pane="eq" class="active" aria-pressed="true">사운드</button><button data-pane="light" aria-pressed="false">무드등</button><button data-pane="car" aria-pressed="false">차량 상태</button></nav>
+    <section class="panel" data-card="eq">
+      <div class="panelhead"><h2>사운드</h2><button id="autoEq" class="mode" aria-pressed="true">EQ · 자동</button></div>
+      <div class="pills" id="presets"><button data-preset="균형">균형</button><button data-preset="저음">저음 강조</button><button data-preset="보컬">보컬 중심</button></div>
+      <svg class="eqgraph" viewBox="0 0 420 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 50 H420 M0 20 H420 M0 80 H420" stroke="#424f61"/><polyline id="eqLine" fill="none" stroke="#91e4ff" stroke-width="3"/></svg>
+      <div id="eqBands" class="eq-grid"></div>
+      <div class="muted" id="eqNote">프리셋이나 대역을 바꾸면 EQ만 직접 선택으로 전환돼요.</div>
+    </section>
+    <section class="panel" data-card="light">
+      <div class="panelhead"><h2>무드등</h2><button id="autoLight" class="mode" aria-pressed="true">조명 · 자동</button></div>
+      <div id="colorArea" class="color-area" aria-hidden="true"><span id="colorMarker" class="color-marker"></span></div>
+      <label class="value-line">색상 <input id="hue" type="range" min="0" max="359" value="35"></label>
+      <label class="value-line">밝기 <input id="lightBrightness" type="range" min="0" max="100" value="62"></label>
+      <div class="pills" id="lightPresets"><button data-color="sunset">노을</button><button data-color="ocean">바다</button><button data-color="night">밤</button><i class="color-preview" id="colorPreview" aria-hidden="true"></i></div>
+      <div class="muted" id="lightNote">원하는 색을 고르면 조명만 유지돼요.</div>
+    </section>
+    <section class="panel" data-card="car">
+      <div class="panelhead"><h2>차량 상태</h2><span class="muted" id="doorStatus">문 닫힘</span></div>
+      <div class="line-status"><button id="door">문 열기</button><label class="toggle"><input type="checkbox" id="duck" checked> 문 열림 음량 조절</label></div>
+      <div class="line-status"><strong>듣는 자리</strong><span class="muted" id="seatStatus">운전자</span></div>
+      <div class="seat-grid" id="seats"><button data-seat="운전자" class="active" aria-pressed="true">운전자</button><button data-seat="앞좌석" aria-pressed="false">앞좌석</button><button data-seat="뒷좌석" aria-pressed="false">뒷좌석</button><button data-seat="모두" aria-pressed="false">모두</button></div>
+      <div class="roof-demo"><label class="value-line">글라스루프 <input type="range" id="roof" min="10" max="100" value="60"></label><div id="roofGlass" class="roof-glass"></div><div class="muted">투과율 미리보기 · 향후 기능</div></div>
+    </section>
+  </aside>
+</div>
+<footer class="player" aria-label="고정 재생 컨트롤">
+  <div class="now"><strong id="track">퇴근길 리듬</strong><div class="notice" id="audioNote">데모 음원</div></div>
+  <div class="transport"><button id="previous" aria-label="이전 곡">|◀</button><button id="play" class="primary play" aria-label="재생">▶</button><button id="next" aria-label="다음 곡">▶|</button></div>
+  <label class="volume">음량 <input id="volume" aria-label="음량" type="range" min="0" max="100" value="65"><output id="volout">65%</output></label>
+</footer>
+</div>
+<script>'use strict';
+const $ = id => document.getElementById(id);
+const scenes = {
+  도시: {label:'퇴근길 정체', parked:false, description:'정체된 퇴근길에 생동감 있는 리듬을 더해요.', hue:35, brightness:62, eq:[3,2,0,0,1,1,0], chords:[55,65.406,73.416,48.999], beat:.34},
+  바다: {label:'해안가 주차', parked:true, description:'바닷가에 멈추면 음악과 배경음이 차분해져요.', hue:192, brightness:54, eq:[1,0,-1,1,1,0,-1], chords:[48.999,55,43.654,41.203], beat:.56},
+  충전: {label:'충전 휴식', parked:true, description:'충전하는 동안 나만의 감상 시간을 가져보세요.', hue:258, brightness:35, eq:[0,0,0,1,0,-1,-2], chords:[41.203,48.999,55,43.654], beat:.72}
+};
+const tracks = [
+  ['퇴근길 리듬','도시','경쾌한 비트'], ['해안의 여운','바다','잔잔한 배경음'], ['잠깐의 휴식','충전','느린 앰비언트'],
+  ['도시의 박자','도시','가벼운 신스'], ['파도 사이','바다','여유로운 멜로디'], ['충전하는 밤','충전','낮은 음과 긴 숨'],
+  ['느린 도로','도시','따뜻한 리듬'], ['수평선','바다','부드러운 코드'], ['고요한 창','충전','편안한 배경음'],
+  ['도심의 잔광','도시','산뜻한 톤'], ['해안의 아침','바다','밝은 멜로디'], ['멈춘 시간','충전','차분한 음색']
+].map(([title,scene,genre],id)=>({title,scene,genre,id}));
+const sounds=[
+  {key:'rain',title:'창가의 빗소리',description:'창문에 내려앉는 빗방울',hue:211},
+  {key:'sea',title:'잔잔한 파도',description:'천천히 밀려드는 물결',hue:184},
+  {key:'forest',title:'아침 숲',description:'나뭇잎 사이 바람과 새소리',hue:106},
+  {key:'stream',title:'숲속 개울',description:'돌 사이로 흐르는 맑은 물',hue:151}
+];
+const hz = [60,150,400,1000,2500,6000,12000];
+const equalizers = {'균형':[0,0,0,0,0,0,0], '저음':[5,4,2,0,0,-1,-1], '보컬':[-2,-1,1,4,3,1,0]};
+const lightPresets={sunset:{h:22,s:80,v:85,brightness:70},ocean:{h:185,s:75,v:75,brightness:65},night:{h:265,s:65,v:65,brightness:45}};
+const modes={music:true,eq:true,light:true};
+const modeButtons={music:['autoMusic','음악'],eq:['autoEq','EQ'],light:['autoLight','조명']};
+const state={scene:'도시',track:0,natural:null,view:'music',home:'music',localFile:null,door:false,console:false,eq:[],light:{h:35,s:74,v:78,brightness:62}};
+const audio=new Audio();
+const urls=new Map();
+let context, gain, filters=[];
+audio.loop=true;
+$('eqBands').innerHTML=hz.map((f,i)=>`<label><input type="range" aria-label="${f} Hz" data-band="${i}" value="0" min="-12" max="12"><output id="band${i}">0 dB</output><span>${f>=1000?f/1000+'k':f}</span></label>`).join('');
+$('queueList').innerHTML=tracks.map(t=>`<button type="button" class="queue-item" data-track="${t.id}" style="--cover:${scenes[t.scene].hue}" aria-current="false"><span class="idx">${String(t.id+1).padStart(2,'0')}</span><span><strong>${t.title}</strong><small>${t.genre} · ${scenes[t.scene].label}</small></span><span aria-hidden="true">▷</span></button>`).join('');
+$('natureGrid').innerHTML=sounds.map((sound,i)=>`<button type="button" class="nature-choice" data-sound="${i}" style="--sound-hue:${sound.hue}" aria-current="false"><span class="nature-mark" aria-hidden="true">▷</span><strong>${sound.title}</strong><small>${sound.description}</small></button>`).join('');
+const natureItems=[...document.querySelectorAll('[data-sound]')];
+const bandInputs=[...document.querySelectorAll('[data-band]')];
+const queueItems=[...document.querySelectorAll('[data-track]')];
+$('queueSummary').textContent=`데모 사운드 ${tracks.length}개`;
+
+function announce(message){ $('uiStatus').textContent=message; }
+function setActive(container, active){
+  for(const button of container.querySelectorAll('button')){
+    const yes=button===active;
+    button.classList.toggle('active',yes);button.setAttribute('aria-pressed',String(yes));
+  }
+}
+function mode(channel, enabled){
+  modes[channel]=enabled;
+  const [id,label]=modeButtons[channel], val=enabled?'자동':'직접 선택';
+  $(id).textContent=label+' · '+val;
+  $(id).setAttribute('aria-pressed',String(enabled));
+  $(id).title=enabled?label+' 자동 맞춤을 유지 중':label+'을 자동으로 돌아가기';
+  if(channel==='light'){
+    $('lightStatus').lastChild.textContent='조명 · '+val;
+    $('lightNote').textContent=enabled?'장면에 맞춰 조명이 바뀌어요.':'현재 조명을 유지해요. 버튼을 눌러 자동으로 돌아갈 수 있어요.';
+  }
+  if(channel==='eq') $('eqNote').textContent=enabled?'프리셋이나 대역을 바꾸면 EQ만 직접 선택으로 전환돼요.':'현재 EQ를 유지해요. 버튼을 눌러 자동으로 돌아갈 수 있어요.';
+}
+function showView(view){
+  if(view==='console'&&!scenes[state.scene].parked)view=state.home;
+  if(view!=='console')state.home=view;
+  state.view=view;state.console=view==='console';
+  document.body.classList.toggle('console-open',state.console);
+  document.body.classList.toggle('nature-open',view==='nature');
+  for(const [id,active] of [['musicView','music'],['natureView','nature'],['consoleView','console']]){
+    const on=view===active;$(id).classList.toggle('active',on);$(id).setAttribute('aria-pressed',String(on));
+  }
+}
+function updateEq(values){
+  state.eq=[...values];
+  state.eq.forEach((value,i)=>{
+    bandInputs[i].value=value;
+    $('band'+i).textContent=(value>0?'+':'')+value+' dB';
+    if(filters[i])filters[i].gain.value=value;
+  });
+  $('eqLine').setAttribute('points',state.eq.map((v,i)=>[30+i*60,50-v*3].join(',')).join(' '));
+}
+function updateLight(){
+  const {h,s,v,brightness}=state.light;
+  const l=(v/100)*(1-s/200)*100;
+  const sat=l>0&&l<100?(v-l)/Math.min(l,100-l)*100:0;
+  const c=`hsl(${h} ${Math.min(100,sat)}% ${l}%)`;
+  $('hue').value=h;$('lightBrightness').value=brightness;
+  $('colorArea').style.setProperty('--hue',h);
+  $('colorMarker').style.left=s+'%';$('colorMarker').style.top=(100-v)+'%';
+  $('colorPreview').style.background=c;$('colorPreview').style.opacity=String(Math.max(.16,brightness/100));
+  document.querySelector('.hero').style.setProperty('--scene-hue',h);
+}
+function resetLight(){
+  const sc=scenes[state.scene];
+  state.light={h:sc.hue,s:70,v:77,brightness:sc.brightness};
+  setActive($('lightPresets'),null);updateLight();
+}
+function updateVolume(){
+  const level=Number($('volume').value)/100, ducked=state.door&&$('duck').checked, effective=level*(ducked?.25:1);
+  $('volout').textContent=Math.round(effective*100)+'%';
+  $('doorStatus').textContent=state.door?(ducked?'문 열림 · 음량 감소':'문 열림'):'문 닫힘';
+  if(gain)gain.gain.setTargetAtTime(effective,context.currentTime,ducked?.11:.19);
+}
+function initAudio(){
+  if(context)return;
+  context=new (window.AudioContext||window.webkitAudioContext)();
+  const source=context.createMediaElementSource(audio);
+  filters=hz.map((f,i)=>{
+    const band=context.createBiquadFilter();band.type=i===0?'lowshelf':i===hz.length-1?'highshelf':'peaking';band.frequency.value=f;band.Q.value=.8;return band;
+  });
+  gain=context.createGain();
+  [source,...filters].forEach((node,i)=>node.connect(filters[i]||gain));
+  gain.connect(context.destination);updateEq(state.eq);updateVolume();
+}
+async function begin(){
+  try{initAudio();await context.resume();await audio.play();$('audioNote').textContent=state.localFile?'내 음원':state.natural!==null?'자연의 소리 · 합성 데모':'로드톤 데모 사운드';}
+  catch{$('audioNote').textContent='재생할 수 없어요. 다른 곡을 선택해 주세요.';}
+}
+function currentTrack(){return tracks[state.track];}
+function displayTrack(title, id, note, sound=null){
+  $('track').textContent=title;$('heroTitle').textContent=title;$('audioNote').textContent=note;
+  for(const button of queueItems)button.setAttribute('aria-current',String(Number(button.dataset.track)===id));
+  for(const button of natureItems)button.setAttribute('aria-current',String(Number(button.dataset.sound)===sound));
+}
+function setTrack(id, forcePlay=false){
+  const keepPlaying=!audio.paused;
+  if(state.localFile){URL.revokeObjectURL(state.localFile);state.localFile=null;}
+  state.natural=null;state.track=id;const track=currentTrack();
+  const nextURL=makeDemo(track);
+  if(audio.src!==nextURL){audio.src=nextURL;audio.loop=true;}
+  displayTrack(track.title,id,'로드톤 데모 사운드');
+  if(forcePlay||keepPlaying)void begin();
+}
+function selectScene(key){
+  state.scene=key;const sc=scenes[key];
+  $('sceneName').textContent=sc.label;$('scene').textContent=sc.description;
+  $('drivingStatus').textContent=sc.parked?'주차 상태':'주행 중';
+  $('consoleView').disabled=!sc.parked;
+  $('consoleView').textContent=sc.parked?'사운드 콘솔':'콘솔 · 주차 시';
+  if(!sc.parked&&state.console)showView(state.home);
+  if(modes.music)setTrack(tracks.find(t=>t.scene===key).id);
+  if(modes.eq){setActive($('presets'),null);updateEq(sc.eq);}
+  if(modes.light)resetLight();
+  announce(sc.label+' 장면');
+}
+function makeDemo(track){
+  if(urls.has(track.id))return urls.get(track.id);
+  const sc=scenes[track.scene], rate=16000, beat=sc.beat*(1+Math.floor(track.id/3)*.045), length=Math.round(beat*16*rate);
+  const data=new ArrayBuffer(44+length*2), d=new DataView(data);
+  const label=(offset,text)=>[...text].forEach((char,i)=>d.setUint8(offset+i,char.charCodeAt(0)));
+  label(0,'RIFF');d.setUint32(4,36+length*2,true);label(8,'WAVE');label(12,'fmt ');
+  d.setUint32(16,16,true);d.setUint16(20,1,true);d.setUint16(22,1,true);d.setUint32(24,rate,true);d.setUint32(28,rate*2,true);d.setUint16(32,2,true);d.setUint16(34,16,true);label(36,'data');d.setUint32(40,length*2,true);
+  for(let i=0;i<length;i++){
+    const t=i/rate, step=Math.floor(t/beat), root=sc.chords[Math.floor(step/4)%4], phase=(t%beat)/beat;
+    const pad=Math.sin(2*Math.PI*root*t)*.26+Math.sin(4*Math.PI*root*t)*.11;
+    const lead=Math.sin(2*Math.PI*root*[4,6,5,8][(step+track.id)%4]*t)*Math.pow(1-phase,2)*.16;
+    const attack=Math.min(1,phase*16,(1-phase)*12);
+    const bed=Math.sin(1910*t+2*Math.sin(26*t))*Math.sin(944*t)*(sc.parked?.024:.012);
+    d.setInt16(44+i*2,Math.round(((pad+lead)*attack+bed)*12500),true);
+  }
+  const url=URL.createObjectURL(new Blob([data],{type:'audio/wav'}));urls.set(track.id,url);return url;
+}
+function natureURL(sound){
+  if(urls.has(sound.key))return urls.get(sound.key);
+  const rate=22050, seconds=16, length=rate*seconds;
+  const data=new ArrayBuffer(44+length*2), d=new DataView(data);
+  const write=(offset,value)=>[...value].forEach((c,i)=>d.setUint8(offset+i,c.charCodeAt(0)));
+  write(0,'RIFF');d.setUint32(4,36+length*2,true);write(8,'WAVE');write(12,'fmt ');
+  d.setUint32(16,16,true);d.setUint16(20,1,true);d.setUint16(22,1,true);
+  d.setUint32(24,rate,true);d.setUint32(28,rate*2,true);d.setUint16(32,2,true);
+  d.setUint16(34,16,true);write(36,'data');d.setUint32(40,length*2,true);
+  let random=32423, low=0, slow=0, flash=0, phase=0;
+  for(let i=0;i<length;i++){
+    random=(Math.imul(random,1664525)+1013904223)>>>0;
+    const n=random/2147483648-1, t=i/rate;
+    low+=.055*(n-low);slow+=.003*(n-slow);
+    flash=flash*.986+(n>.9980?n*.058:0);
+    let value;
+    if(sound.key==='rain') value=.08*low + .028*(n-low) + flash*.21*n;
+    else if(sound.key==='sea'){
+      const tide=.30+.70*Math.pow(.5+.5*Math.sin(2*Math.PI*t/5.33),2);
+      value=tide*(.19*low+.52*slow+.023*(n-low));
+    }else if(sound.key==='forest'){
+      const birds=t%3.9, duration=.29;
+      const amp=birds<duration?Math.pow(Math.sin(Math.PI*birds/duration),2)*.021:0;
+      phase+=2*Math.PI*(1700+530*Math.sin(15*birds)+250*Math.sin(33*birds))/rate;
+      value=.17*low+.64*slow+amp*Math.sin(phase);
+    }else{
+      const bubble=.42+.58*Math.pow(Math.sin(2*Math.PI*(.54*t+.16*Math.sin(t))),2);
+      value=.30*low+.036*(n-low)*bubble+flash*.14*n;
+    }
+    const fade=Math.min(1,t/.18,(seconds-t)/.18);
+    d.setInt16(44+i*2,Math.round(Math.max(-1,Math.min(1,value*2.8*fade))*32700),true);
+  }
+  const url=URL.createObjectURL(new Blob([data],{type:'audio/wav'}));
+  urls.set(sound.key,url);return url;
+}
+function playNature(index){
+  const sound=sounds[index];
+  if(state.localFile){URL.revokeObjectURL(state.localFile);state.localFile=null;}
+  state.natural=index;mode('music',false);audio.src=natureURL(sound);audio.loop=true;
+  displayTrack(sound.title,-1,'자연의 소리 · 합성 데모',index);
+  announce(sound.title+' 재생');
+  void begin();
+}
+$('musicView').onclick=()=>showView('music');
+$('natureView').onclick=()=>showView('nature');
+$('consoleView').onclick=()=>showView('console');
+$('natureGrid').onclick=e=>{
+  const button=e.target.closest('[data-sound]');if(!button)return;
+  const id=Number(button.dataset.sound);
+  if(state.natural===id&&!audio.paused)audio.pause();
+  else if(state.natural===id)void begin();
+  else playNature(id);
+};
+$('scenes').onclick=e=>{
+  const b=e.target.closest('button[data-scene]');if(!b)return;
+  setActive($('scenes'),b);selectScene(b.dataset.scene);
+};
+document.querySelector('.panel-tabs').onclick=e=>{
+  const b=e.target.closest('[data-pane]');if(!b)return;
+  setActive(e.currentTarget,b);$('consoleScreen').dataset.pane=b.dataset.pane;
+};
+for(const [channel,[id]] of Object.entries(modeButtons)){
+  $(id).onclick=()=>{
+    const next=!modes[channel];mode(channel,next);
+    if(next){
+      if(channel==='music')setTrack(tracks.find(t=>t.scene===state.scene).id);
+      if(channel==='eq'){setActive($('presets'),null);updateEq(scenes[state.scene].eq);}
+      if(channel==='light')resetLight();
+    }
+    announce($(id).textContent);
+  };
+}
+$('queueList').onclick=e=>{
+  const b=e.target.closest('[data-track]');if(!b)return;
+  mode('music',false);setTrack(Number(b.dataset.track),true);
+};
+function stepTrack(delta){
+  if(state.natural!==null){playNature((state.natural+sounds.length+delta)%sounds.length);return;}
+  mode('music',false);setTrack((state.track+tracks.length+delta)%tracks.length,!audio.paused);
+}
+$('previous').onclick=()=>stepTrack(-1);
+$('next').onclick=()=>stepTrack(1);
+$('play').onclick=()=>audio.paused?void begin():audio.pause();
+function playbackLabel(){
+  $('play').textContent=audio.paused?'▶':'Ⅱ';
+  $('play').setAttribute('aria-label',audio.paused?'재생':'일시정지');
+}
+audio.onplay=audio.onpause=audio.onended=playbackLabel;
+$('file').onchange=e=>{
+  const file=e.target.files[0];if(!file)return;
+  if(state.localFile)URL.revokeObjectURL(state.localFile);
+  state.natural=null;state.localFile=URL.createObjectURL(file);audio.src=state.localFile;audio.loop=false;
+  mode('music',false);displayTrack(file.name,-1,'내 음원');void begin();
+};
+$('presets').onclick=e=>{
+  const b=e.target.closest('[data-preset]');if(!b)return;
+  mode('eq',false);setActive($('presets'),b);updateEq(equalizers[b.dataset.preset]);
+};
+$('eqBands').oninput=()=>{
+  mode('eq',false);setActive($('presets'),null);updateEq(bandInputs.map(input=>Number(input.value)));
+};
+$('lightPresets').onclick=e=>{
+  const b=e.target.closest('[data-color]');if(!b)return;
+  mode('light',false);setActive($('lightPresets'),b);state.light={...lightPresets[b.dataset.color]};updateLight();
+};
+function tuneLight(which,value){mode('light',false);setActive($('lightPresets'),null);state.light[which]=value;updateLight();}
+$('hue').oninput=e=>tuneLight('h',Number(e.target.value));
+$('lightBrightness').oninput=e=>tuneLight('brightness',Number(e.target.value));
+function pickColor(e){
+  const rect=$('colorArea').getBoundingClientRect();
+  const clamp=v=>Math.max(0,Math.min(1,v));
+  state.light.s=Math.round(clamp((e.clientX-rect.left)/rect.width)*100);
+  tuneLight('v',Math.round((1-clamp((e.clientY-rect.top)/rect.height))*100));
+}
+$('colorArea').onpointerdown=e=>{e.currentTarget.setPointerCapture(e.pointerId);pickColor(e);};
+$('colorArea').onpointermove=e=>{if(e.currentTarget.hasPointerCapture(e.pointerId))pickColor(e);};
+$('seats').onclick=e=>{
+  const b=e.target.closest('[data-seat]');if(!b)return;
+  setActive($('seats'),b);$('seatStatus').textContent=b.dataset.seat;
+};
+$('door').onclick=()=>{
+  state.door=!state.door;$('door').textContent=state.door?'문 닫기':'문 열기';updateVolume();
+};
+$('volume').oninput=$('duck').onchange=updateVolume;
+$('roof').oninput=e=>$('roofGlass').style.opacity=String(Number(e.target.value)/100);
+showView('music');selectScene(state.scene);updateVolume();
+</script></body></html>
